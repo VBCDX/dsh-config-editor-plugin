@@ -1,0 +1,48 @@
+{
+  "name": "@vbcdx/dsh-config-editor-plugin",
+  "version": "1.2.0",
+  "description": "DSH plugin providing an in-app browser editor for DSH configuration files and agent presets",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    ".env.example",
+    "README.md"
+  ],
+  "dsh": {
+    "plugin": true,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "config",
+    "editor",
+    "agent-preset"
+  ],
+  "author": "VBCDX",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,11 @@
+# Insert the in-app configuration & agent preset editor into the Web
+# composition. Install with: dsh plugin --profile <name> add <this repo's git URL>
+#
+# The row loads lib/index.js (host half): it serves /plugins/config-editor
+# with GET (list documents, read one by id) and POST (save with backup).
+# The browser half (lib/client.js, found through the dsh.client field in
+# package.json) contributes the "Config Editor" header button and the
+# overlay editor window.
+- insert:
+    - id: config-editor
+      name: "@vbcdx/dsh-config-editor-plugin"
