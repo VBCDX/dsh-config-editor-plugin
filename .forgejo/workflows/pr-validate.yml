@@ -1,0 +1,36 @@
+# .forgejo/workflows/pr-validate.yml
+---
+name: PR Validation
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ${{ vars.CI_RUNNER_LABEL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run test suite
+        run: npm test
+
+      - name: Verify plugin contract
+        run: |
+          node --input-type=module -e "
+          import * as p from './lib/index.js';
+          const tests = [
+            Array.isArray(p.inject),
+            typeof p.apply === 'function',
+            typeof p.listDocuments === 'function',
+            typeof p.resolveDocPath === 'function',
+          ];
+          console.log('Contract tests:', tests.filter(Boolean).length + '/' + tests.length + ' passed');
+          process.exit(tests.every(Boolean) ? 0 : 1);
+          "
