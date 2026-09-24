@@ -22,9 +22,15 @@ plugin gives those files an in-app editor instead.
   - Credentials metadata (`$DSH_HOME/.credentials.yaml`)
   - Reverse proxy / remote access config (`$DSH_HOME/reverse-proxy.json`)
   - Agent presets (`$DSH_HOME/.agent-presets/<id>/agent.cordis.yml`)
-- **Backup on save** — a timestamped `.bak.<ms>` copy is written next to the
-  file before every change (the file itself is only overwritten after the
-  backup succeeds)
+- **Backup on save** — a uniquely-named, exclusively-created `.bak.<ms>` copy is
+  written next to the file before every change (the file itself is only
+  overwritten after the backup succeeds). Saves that share a millisecond get
+  distinct `.bak.<ms>-<n>` names, so an earlier recovery point is never
+  overwritten
+- **Target containment** — every document target is proven to be a regular file
+  under `$DSH_HOME` with no symlink in any path component before it is listed,
+  read, backed up, or written, so an allowed ID cannot be redirected outside the
+  home through an existing symlink
 - **No desktop opener** — nothing touches `xdg-open`
 
 ## Install
